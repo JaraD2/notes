@@ -18,8 +18,9 @@ import {
   redirect,
 } from "@remix-run/node";
 import appStylesHref from "./app.css?url";
-import { getContacts, createEmptyContact } from "./data";
+import { getNotes, createEmptyNote } from "./data";
 import { useEffect } from "react";
+// import { consola } from "consola";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: appStylesHref },
@@ -27,17 +28,23 @@ export const links: LinksFunction = () => [
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const q = url.searchParams.get("q");
-  const contacts = await getContacts(q);
-  return json({ contacts, q });
+  const notes = await getNotes(q);
+  return json({ notes, q });
 };
 
 export const action = async () => {
-  const contact = await createEmptyContact();
-  return redirect(`/contacts/${contact.id}/edit`);
+  const note = await createEmptyNote();
+  return redirect(`/notes/${note.id}/edit`);
 };
+export const meta = () => [
+  {
+    title: "Notes",
+    description: "A simple notes app",
+  },
+];
 
 export default function App() {
-  const { contacts, q } = useLoaderData<typeof loader>();
+  const { notes, q } = useLoaderData<typeof loader>();
   const navigation = useNavigation();
   const submit = useSubmit();
   const searching =
@@ -61,7 +68,7 @@ export default function App() {
       </head>
       <body>
         <div id="sidebar">
-          <h1>Remix Contacts</h1>
+          <h1>Notes</h1>
           <div>
             <Form
               id="search-form"
@@ -76,7 +83,7 @@ export default function App() {
               <input
                 id="q"
                 className={searching ? "loading" : ""}
-                aria-label="Search contacts"
+                aria-label="Search notes"
                 defaultValue={q || ""}
                 placeholder="Search"
                 type="search"
@@ -89,33 +96,34 @@ export default function App() {
             </Form>
           </div>
           <nav>
-            {contacts.length ? (
+            {notes.length ? (
               <ul>
-                {contacts.map((contact) => (
-                  <li key={contact.id}>
-                    <NavLink
-                      className={({ isActive, isPending }) =>
-                        isActive ? "active" : isPending ? "pending" : ""
-                      }
-                      to={`contacts/${contact.id}`}
-                    >
-                      <Link to={`contacts/${contact.id}`}>
-                        {contact.first || contact.last ? (
-                          <>
-                            {contact.first} {contact.last}
-                          </>
-                        ) : (
-                          <i>No Name</i>
-                        )}{" "}
-                        {contact.favorite ? <span>★</span> : null}
-                      </Link>
-                    </NavLink>
-                  </li>
-                ))}
+                {notes
+                  .sort((a, b) =>
+                    a.viewedAt && b.viewedAt
+                      ? a.viewedAt > b.viewedAt
+                        ? -1
+                        : 1
+                      : 0,
+                  )
+                  .map((note) => (
+                    <li key={note.id}>
+                      <NavLink
+                        className={({ isActive, isPending }) =>
+                          isActive ? "active" : isPending ? "pending" : ""
+                        }
+                        to={`notes/${note.id}`}
+                      >
+                        <Link to={`notes/${note.id}`}>
+                          {note.title ? <>{note.title}</> : <i>No Name</i>}{" "}
+                        </Link>
+                      </NavLink>
+                    </li>
+                  ))}
               </ul>
             ) : (
               <p>
-                <i>No contacts</i>
+                <i>No notes</i>
               </p>
             )}
           </nav>

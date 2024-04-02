@@ -24,7 +24,6 @@ model Users {
   email     String   @unique
   phone     String?  @unique
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
   notes     Notes[]
 }
 
@@ -35,7 +34,7 @@ model Notes {
   userId    Int
   user      Users    @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  ViewedAt  DateTime @default(now())
 }
 
 enum Role {

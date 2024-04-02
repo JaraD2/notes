@@ -15,6 +15,7 @@
     "@remix-run/node": "^2.8.1",
     "@remix-run/react": "^2.8.1",
     "@remix-run/serve": "^2.8.1",
+    "consola": "^3.2.3",
     "isbot": "^4.1.0",
     "match-sorter": "^6.3.1",
     "mysql": "^2.18.1",
