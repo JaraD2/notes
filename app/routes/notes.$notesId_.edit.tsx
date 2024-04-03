@@ -27,7 +27,7 @@ export default function EditNotes() {
   const navigate = useNavigate();
 
   return (
-    <Form key={notes.id} id="contact-form" method="post">
+    <Form key={notes.id} id="note-form" method="post">
       <p>
         <span>Name</span>
         <input

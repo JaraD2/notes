@@ -56,27 +56,70 @@ button:active {
   transform: translateY(1px);
 }
 
-#contact h1 {
+#notePreviewList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 300px));
+
+  gap: 1rem;
+}
+#notePreviewList li {
+  display: flex;
+  border: #e3e3e3 1px solid;
+  border-radius: 8px;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  max-height: 200px;
+  height: min-content;
+  overflow: hidden;
+}
+
+#notePreviewList h3 {
+  margin: 0;
+  padding: 0rem;
+}
+
+#notePreviewList p {
+  margin: 0;
+}
+
+#notePreviewList li a {
+  display: block;
+  padding: 1rem;
+  text-decoration: none;
+  color: inherit;
+}
+
+#note h1 {
   display: flex;
   align-items: flex-start;
   gap: 1rem;
 }
-#contact h1 form {
+#note pre {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen",
+    "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue",
+    sans-serif;
+  overflow: wrap;
+  white-space: pre-wrap;
+}
+#note h1 form {
   display: flex;
   align-items: center;
   margin-top: 0.25rem;
 }
-#contact h1 form button {
+#note h1 form button {
   box-shadow: none;
   font-size: 1.5rem;
   font-weight: 400;
   padding: 0;
 }
-#contact h1 form button[value="true"] {
+#note h1 form button[value="true"] {
   color: #a4a4a4;
 }
-#contact h1 form button[value="true"]:hover,
-#contact h1 form button[value="false"] {
+#note h1 form button[value="true"]:hover,
+#note h1 form button[value="false"] {
   color: #eeb004;
 }
 
@@ -265,42 +308,42 @@ i {
   transition-delay: 200ms;
 }
 
-#contact {
+#note {
   max-width: 40rem;
   display: flex;
 }
 
-#contact h1 {
+#note h1 {
   font-size: 2rem;
   font-weight: 700;
   margin: 0;
   line-height: 1.2;
 }
 
-#contact h1 + p {
+#note h1 + p {
   margin: 0;
 }
 
-#contact h1 + p + p {
+#note h1 + p + p {
   white-space: break-spaces;
 }
 
-#contact h1:focus {
+#note h1:focus {
   outline: none;
   color: hsl(224, 98%, 58%);
 }
 
-#contact a[href*="twitter"] {
+#note a[href*="twitter"] {
   display: flex;
   font-size: 1.5rem;
   color: #3992ff;
   text-decoration: none;
 }
-#contact a[href*="twitter"]:hover {
+#note a[href*="twitter"]:hover {
   text-decoration: underline;
 }
 
-#contact img {
+#note img {
   width: 12rem;
   height: 12rem;
   background: #c8c8c8;
@@ -309,62 +352,62 @@ i {
   object-fit: cover;
 }
 
-#contact h1 ~ div {
+#note h1 ~ div {
   display: flex;
   gap: 0.5rem;
   margin: 1rem 0;
 }
 
-#contact-form {
+#note-form {
   display: flex;
   max-width: 40rem;
   flex-direction: column;
   gap: 1rem;
 }
-#contact-form > p:first-child {
+#note-form > p:first-child {
   margin: 0;
   padding: 0;
 }
-#contact-form > p:first-child > :nth-child(2) {
+#note-form > p:first-child > :nth-child(2) {
   margin-right: 1rem;
 }
-#contact-form > p:first-child,
-#contact-form label {
+#note-form > p:first-child,
+#note-form label {
   display: flex;
 }
-#contact-form p:first-child span,
-#contact-form label span {
+#note-form p:first-child span,
+#note-form label span {
   width: 8rem;
 }
-#contact-form p:first-child input,
-#contact-form label input,
-#contact-form label textarea {
+#note-form p:first-child input,
+#note-form label input,
+#note-form label textarea {
   flex-grow: 2;
 }
 
-#contact-form-avatar {
+#note-form-avatar {
   margin-right: 2rem;
 }
 
-#contact-form-avatar img {
+#note-form-avatar img {
   width: 12rem;
   height: 12rem;
   background: hsla(0, 0%, 0%, 0.2);
   border-radius: 1rem;
 }
 
-#contact-form-avatar input {
+#note-form-avatar input {
   box-sizing: border-box;
   width: 100%;
 }
 
-#contact-form p:last-child {
+#note-form p:last-child {
   display: flex;
   gap: 0.5rem;
   margin: 0 0 0 8rem;
 }
 
-#contact-form p:last-child button[type="button"] {
+#note-form p:last-child button[type="button"] {
   color: inherit;
 }
 

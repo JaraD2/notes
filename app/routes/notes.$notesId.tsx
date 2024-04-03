@@ -20,11 +20,11 @@ export default function Note() {
   const { notes } = useLoaderData<typeof loader>();
 
   return (
-    <div id="contact">
+    <div id="note">
       <div>
         <h1>{notes.title ? <>{notes.title}</> : <i>No Name</i>} </h1>
         {notes.viewedAt ? <sub>{notes.viewedAt}</sub> : null}
-        {notes.note ? <p>{notes.note}</p> : null}
+        {notes.note ? <pre>{notes.note}</pre> : null}
 
         <div>
           <Form action="edit">
