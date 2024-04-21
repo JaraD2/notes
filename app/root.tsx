@@ -21,7 +21,6 @@ import appStylesHref from "./app.css?url";
 // import { getNotes, createEmptyNote } from "./data";
 import { useEffect } from "react";
 import { getAllNotes, createEmptyNote } from "app/db";
-import sortBy from "sort-by";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: appStylesHref },
@@ -99,20 +98,28 @@ export default function App() {
           <nav>
             {notes.length ? (
               <ul>
-                {notes.sort(sortBy("viewedAt")).map((note) => (
-                  <li key={note.id}>
-                    <NavLink
-                      className={({ isActive, isPending }) =>
-                        isActive ? "active" : isPending ? "pending" : ""
-                      }
-                      to={`notes/${note.id}`}
-                    >
-                      <Link to={`notes/${note.id}`}>
-                        {note.title ? <>{note.title}</> : <i>No Name</i>}{" "}
-                      </Link>
-                    </NavLink>
-                  </li>
-                ))}
+                {notes
+                  .sort((a, b) =>
+                    a.viewedAt && b.viewedAt
+                      ? a.viewedAt > b.viewedAt
+                        ? -1
+                        : 1
+                      : 0,
+                  )
+                  .map((note) => (
+                    <li key={note.id}>
+                      <NavLink
+                        className={({ isActive, isPending }) =>
+                          isActive ? "active" : isPending ? "pending" : ""
+                        }
+                        to={`notes/${note.id}`}
+                      >
+                        <Link to={`notes/${note.id}`}>
+                          {note.title ? <>{note.title}</> : <i>No Name</i>}{" "}
+                        </Link>
+                      </NavLink>
+                    </li>
+                  ))}
               </ul>
             ) : (
               <p>
