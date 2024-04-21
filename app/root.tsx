@@ -18,9 +18,10 @@ import {
   redirect,
 } from "@remix-run/node";
 import appStylesHref from "./app.css?url";
-import { getNotes, createEmptyNote } from "./data";
+// import { getNotes, createEmptyNote } from "./data";
 import { useEffect } from "react";
-// import { consola } from "consola";
+import { getAllNotes, createEmptyNote } from "app/db";
+import sortBy from "sort-by";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: appStylesHref },
@@ -28,7 +29,7 @@ export const links: LinksFunction = () => [
 export const loader = async ({ request }: LoaderFunctionArgs) => {
   const url = new URL(request.url);
   const q = url.searchParams.get("q");
-  const notes = await getNotes(q);
+  const notes = await getAllNotes(q);
   return json({ notes, q });
 };
 
@@ -98,28 +99,20 @@ export default function App() {
           <nav>
             {notes.length ? (
               <ul>
-                {notes
-                  .sort((a, b) =>
-                    a.viewedAt && b.viewedAt
-                      ? a.viewedAt > b.viewedAt
-                        ? -1
-                        : 1
-                      : 0,
-                  )
-                  .map((note) => (
-                    <li key={note.id}>
-                      <NavLink
-                        className={({ isActive, isPending }) =>
-                          isActive ? "active" : isPending ? "pending" : ""
-                        }
-                        to={`notes/${note.id}`}
-                      >
-                        <Link to={`notes/${note.id}`}>
-                          {note.title ? <>{note.title}</> : <i>No Name</i>}{" "}
-                        </Link>
-                      </NavLink>
-                    </li>
-                  ))}
+                {notes.sort(sortBy("viewedAt")).map((note) => (
+                  <li key={note.id}>
+                    <NavLink
+                      className={({ isActive, isPending }) =>
+                        isActive ? "active" : isPending ? "pending" : ""
+                      }
+                      to={`notes/${note.id}`}
+                    >
+                      <Link to={`notes/${note.id}`}>
+                        {note.title ? <>{note.title}</> : <i>No Name</i>}{" "}
+                      </Link>
+                    </NavLink>
+                  </li>
+                ))}
               </ul>
             ) : (
               <p>

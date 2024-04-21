@@ -1,17 +1,18 @@
 import { json, LoaderFunctionArgs } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
-import { getNote, updateNote } from "../data";
+// import { getNote, updateNote } from "../data";
+import { getNote, updateNote } from "../db";
 import invariant from "tiny-invariant";
 
 export const loader = async ({ params }: LoaderFunctionArgs) => {
   invariant(params.notesId, "Missing notesId param");
-  const notes = await getNote(params.notesId);
+  const notes = await getNote(Number(params.notesId));
   const viewedAt = { viewedAt: new Date().toISOString() };
-  await updateNote(params.notesId, viewedAt);
+  await updateNote(Number(params.notesId), viewedAt);
   if (!notes) {
     throw new Response("Not Found", { status: 404 });
   } else {
-    console.log("note", notes);
+    // console.log("note", notes);
   }
   return json({ notes });
 };
@@ -24,7 +25,7 @@ export default function Note() {
       <div>
         <h1>{notes.title ? <>{notes.title}</> : <i>No Name</i>} </h1>
         {notes.viewedAt ? <sub>{notes.viewedAt}</sub> : null}
-        {notes.note ? <pre>{notes.note}</pre> : null}
+        {notes.content ? <pre>{notes.content}</pre> : null}
 
         <div>
           <Form action="edit">

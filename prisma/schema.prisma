@@ -34,7 +34,7 @@ model Notes {
   userId    Int
   user      Users    @relation(fields: [userId], references: [id])
   createdAt DateTime @default(now())
-  ViewedAt  DateTime @default(now())
+  viewedAt  DateTime @default(now())
 }
 
 enum Role {
