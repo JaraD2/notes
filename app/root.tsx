@@ -18,7 +18,6 @@ import {
   redirect,
 } from "@remix-run/node";
 import appStylesHref from "./app.css?url";
-// import { getNotes, createEmptyNote } from "./data";
 import { useEffect } from "react";
 import { getAllNotes, createEmptyNote } from "app/db";
 

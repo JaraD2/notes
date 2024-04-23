@@ -2,7 +2,7 @@ import type { LoaderFunctionArgs, ActionFunctionArgs } from "@remix-run/node";
 import { json, redirect } from "@remix-run/node";
 import { Form, useLoaderData, useNavigate } from "@remix-run/react";
 import invariant from "tiny-invariant";
-import { getNote, updateNote } from "app/db";
+import { getNote, updateNote } from "../db";
 
 export const action = async ({ params, request }: ActionFunctionArgs) => {
   invariant(params.notesId, "Missing notesId param");

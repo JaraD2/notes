@@ -1,6 +1,5 @@
 import { json, LoaderFunctionArgs } from "@remix-run/node";
 import { Form, useLoaderData } from "@remix-run/react";
-// import { getNote, updateNote } from "../data";
 import { getNote, updateNote } from "../db";
 import invariant from "tiny-invariant";
 
@@ -11,8 +10,6 @@ export const loader = async ({ params }: LoaderFunctionArgs) => {
   await updateNote(Number(params.notesId), viewedAt);
   if (!notes) {
     throw new Response("Not Found", { status: 404 });
-  } else {
-    // console.log("note", notes);
   }
   return json({ notes });
 };
